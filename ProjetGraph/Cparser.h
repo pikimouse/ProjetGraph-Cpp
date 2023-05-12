@@ -1,36 +1,15 @@
 #pragma once
-Je dois créé un projet en c++ pour gérer des graphs et je dois utiliser cette structure :
-La classe Cexception : qui permettra de lever des exceptions
-La classe Carc : qui représentera des arcs dans le graphe,
-La classe Csommet : qui représentera des sommets dans le graphe,
-La classe Cgraphe : qui représentera un graphe.
-La classe Cparser : qui permet de lire le contenu d’un graphe dans un fichier texte et créer un objet graphe en mémoire pour stocker les données lues dans le fichier.Le format du fichier texte(imposé) est donné ci - dessous et illustré dans le cadre d’un exemple : il repose sur l’utilisation de quelques balises.
-NBSommets = <Nombre_de_Sommets_du_graphe>
-NBArcs = < Nombre_d_arcs_du_graphe >
-Sommets = [
-	Numero = <Numéro_sommet >
-		Numero = <Numéro_sommet>
-		…
-		Numero = <Numéro_sommet>
-]
-Arcs = [
-	Debut = <Sommet_départ_arc>, Fin = <Sommet_arrivée_arc>
-		Debut = <Sommet_départ_arc>, Fin = <Sommet_arrivée_arc>
-		…
-		Debut = <Sommet_départ_arc>, Fin = <Sommet_arrivée_arc>
-]
-
-La classe graphe va tout simplement contenir un tableau de Csommet qui seront les sommets du graphe.
-La librairie que vous devez fournir doit permettre :
-	De créer des objets graphe,
-		De faire des opérations « élémentaires » sur un graphe,
-		Ajouter / modifier / supprimer un sommet au graphe,
-		Ajouter / modifier / supprimer un arc du graphe,
-		Afficher à l’écran un graphe.
-		Les variables, types, classes, fonction et méthodes devront respecter les conventions de nommage,
-		Les attributs de la classe Csommet sont un numero qui decrit le sommet, Carc** arrivant qui sera inséré dans la liste des Partant du sommet de départ et Carc** partant qui  sera inséré dans la liste des Arrivant du sommet d’arrivé.
-		La classe Carc contiendra le seul attribut destination qui est le numéro du sommet destination(nommons le Destination) elle aura aussi le meme type que numéro
-class Cparser
-{
+#include "Cgraph.h"
+#include <string>
+class Cparser {
+public:
+    Cparser(std::string filename); // Constructeur, prend en entrée le nom du fichier à lire
+    Cgraphe* PARGraphe(); // Renvoie un pointeur vers l'objet Cgraphe créé à partir du fichier
+private:
+    void PARLireSommets(std::ifstream& file); // Lit les sommets du graphe à partir du fichier et les ajoute dans l'objet Cgraphe correspondant
+    void PARLireArcs(std::ifstream& file); // Lit les arcs du graphe à partir du fichier et les ajoute dans l'objet Cgraphe correspondant
+    std::string PARLireProchaineBalise(std::ifstream& file); // Renvoie la prochaine balise du fichier (ex: "NBSommets =", "Sommets =", ...)
+    int PARLireProchainNombre(std::ifstream& file); // Renvoie le prochain nombre présent dans le fichier (ex: le nombre de sommets, le numéro d'un sommet, ...)
+    std::string sPARFilename; // Nom du fichier à lire
+    Cgraphe* GPHPARGraphe; // Pointeur vers l'objet Cgraphe créé à partir du fichier
 };
-
